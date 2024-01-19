@@ -4,19 +4,6 @@ import React from "react";
 //create your first component
 const PromiseJS = () => {
 
-    const myPromise = new Promise((resolve, reject) => {
-        setTimeout(() => {
-            resolve("La promesa se ha resuelto");
-        }, 300);
-    });
-
-
-    myPromise.then((obj) => {
-        console.log(obj);
-    });
-    console.log(myPromise);
-
-
     const returnedPromiseHere = () => {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
@@ -44,3 +31,16 @@ const PromiseJS = () => {
 };
 
 export default PromiseJS;
+
+// const myPromise = new Promise((resolve, reject) => {
+//     setTimeout(() => {
+//         resolve("La promesa se ha resuelto");
+//     }, 300);
+// });
+
+
+// myPromise.then((obj) => {
+//     console.log(obj);
+// });
+
+// console.log(myPromise);

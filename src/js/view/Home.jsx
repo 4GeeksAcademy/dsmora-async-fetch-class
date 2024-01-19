@@ -9,9 +9,9 @@ import RestApi from '../component/RestApi'
 const Home = () => {
 	return (
 		<div className="text-center">
-			{/* <Stack /> */}
-			{/* <Async /> */}
-			{/* <PromiseJS /> */}
+			{/* <Stack />
+			<Async />
+			<PromiseJS /> */}
 			{/* <AsyncAwait /> */}
 			<RestApi />
 		</div>

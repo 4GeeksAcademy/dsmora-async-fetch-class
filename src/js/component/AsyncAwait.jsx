@@ -1,84 +1,109 @@
-import React from "react";
-
+import React, { useEffect, useState } from "react";
 //create your first component
 const AsyncAwait = () => {
-    // const returnedPromiseHere = () => {
-    //     return new Promise((resolve, reject) => {
-    //         setTimeout(() => {
-    //             resolve("Yo soy las imágenes que vienen de la base de datos");
-    //         }, 1000);
-    //     });
-    // }
 
-    // const useAsyncFunction = async () => {
-    //     console.log("Soy una tarea rápida");
-    //     let result = await returnedPromiseHere();
-    //     console.log(result);
-    //     console.log("Tuve que esperar a que el await terminara");
-    // }
-    // useAsyncFunction();
+    const [pokemon, setPokemon] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    const fetchData = async (endpoint) => {
+        await fetch(endpoint)
+            .then(response => {
+                if (!response.ok) {
+                    throw Error(response.statusText);
+                }
+                // Lee la respuesta como JSON
+                return response.json();
+            })
+            .then(responseAsJson => {
+                // Haz lo que quieras con la respuesta JSONificada
+                setPokemon(responseAsJson.results);
+                setLoading(false);
+            })
+            .catch(error => {
+                console.log('Looks like there was a problem: \n', error);
+            });
+    }
+
+    useEffect(() => {
+        fetchData('https://pokeapi.co/api/v2/pokemon/');
+    }, []);
 
 
+    console.log(pokemon);
+    console.log(loading);
+
+    if (loading) return <h1>Loading...</h1>
 
     return (
         <div className="text-center">
             <h1>
                 Async Await
             </h1>
+            <ul>
+                {pokemon.map((item, index) => {
+                    return <li key={index}>{item.name}</li>
+                })
+                }
+            </ul>
+
         </div>
     );
 };
 
 export default AsyncAwait;
 
-/*
-function promise1() {
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            resolve("Estoy resuelta como 1");
-        }, 100);
-    });
-}
-function promise2() {
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            resolve("Estoy resuelta como 2");
-        }, 200);
-    });
-}
-function promise3() {
-    return new Promise((resolve, reject) => {
-        setTimeout(() => {
-            resolve("Estoy resuelta como 3");
-        }, 300);
-    });
-}
-async function handlingAllPromises() {
-    let first = await promise1();
-    let second = await promise2();
-    let third = await promise3();
 
-    console.log(first);
-    console.log(second);
-    console.log(third);
-}
-handlingAllPromises();
+// function promise1() {
+//     return new Promise((resolve, reject) => {
+//         setTimeout(() => {
+//             resolve("Estoy resuelta como 1");
+//         }, 1000);
+//     });
+// }
 
-let [first, second, third] = await Promise.all([promise1(), promise2(), promise3()]);
+// function promise2() {
+//     return new Promise((resolve, reject) => {
+//         setTimeout(() => {
+//             resolve("Estoy resuelta como 2");
+//         }, 2000);
+//     });
+// }
 
-const handlingAllPromises = async () => {
-    let [first, second, third] = await Promise.all([promise1(), promise2(), promise3()]);
+// function promise3() {
+//     return new Promise((resolve, reject) => {
+//         setTimeout(() => {
+//             resolve("Estoy resuelta como 3");
+//         }, 3000);
+//     });
+// }
 
-    console.log(first);
-    console.log(second);
-    console.log(third);
-}
+// function handlingAllPromises() {
+//     let first = promise1().then((result) => result);
+//     let second = promise2().then((result) => result);
+//     let third = promise3().then((result) => result);
 
-   const fetchData = async (endpoint) => {
-        const response = await fetch(endpoint);
-        const data = await response.json();
-        console.log(data);
-    }
+//     console.log(first);
+//     console.log(second);
+//     console.log(third);
+// }
 
-    fetchData('https://pokeapi.co/api/v2/pokemon/');
-*/
+// handlingAllPromises();
+
+
+// let [first, second, third] = await Promise.all([promise1(), promise2(), promise3()]);
+
+// const handlingAllPromises = async () => {
+//     let [first, second, third] = await Promise.all([promise1(), promise2(), promise3()]);
+
+//     console.log(first);
+//     console.log(second);
+//     console.log(third);
+// }
+
+// // // const fetchData = async (endpoint) => {
+// // //     const response = await fetch(endpoint);
+// // //     const data = await response.json();
+// // //     console.log(data);
+// // // }
+
+// // // fetchData('https://pokeapi.co/api/v2/pokemon/');
